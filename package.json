@@ -1,10 +1,31 @@
 {
+  "name": "Travel-app",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "start": "node src/server/server.js",
+    "build-prod": "webpack --config webpack.prod.js",
+    "build-dev": "webpack   --config webpack.dev.js"
+  },
   "dependencies": {
+    "axios": "^1.7.9",
     "body-parser": "^1.20.3",
     "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
     "express": "^4.21.2",
+    "html-webpack-plugin": "^5.6.3",
     "jest": "^29.7.0",
     "webpack": "^5.97.1",
     "webpack-cli": "^6.0.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.26.0",
+    "@babel/preset-env": "^7.26.0",
+    "babel-loader": "^9.2.1",
+    "clean-webpack-plugin": "^4.0.0",
+    "css-loader": "^7.1.2",
+    "sass-loader": "^16.0.4",
+    "style-loader": "^4.0.0"
   }
 }
