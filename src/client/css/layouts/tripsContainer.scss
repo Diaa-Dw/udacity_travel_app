@@ -4,13 +4,14 @@
   margin: 2.4rem;
 }
 .trip {
-  width: 33%;
+  width: 100%;
   max-width: 38rem;
   background-color: #d0e5f7;
   border-radius: 0.8rem;
   overflow: hidden;
   & * {
     padding: 0.4rem 0.8rem;
+    margin: 0.1rem 0rem;
   }
   img {
     width: 100%;
@@ -26,7 +27,7 @@
 .trip__info {
   display: flex;
   align-items: center;
-  margin: 1.5rem 0.6rem;
+  margin: 1.5rem 0rem;
   font-size: 1.2rem;
   img {
     width: 2rem;
@@ -35,7 +36,28 @@
 }
 
 .mark-text {
-  background-color: rgb(242, 255, 165);
+  background-color: rgba(241, 255, 165, 0.651);
   padding: 0.3rem 1.2rem;
   border-radius: 0.5rem;
+}
+
+.trip__counter {
+  padding: 0.4rem 0.8rem;
+  margin: 0 0.6rem;
+  background-color: rgba(241, 255, 165, 0.651);
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  img {
+    width: 3rem;
+  }
+  .trip_counter_descrption {
+    font-weight: 500;
+    font-size: 1.4rem;
+    span {
+      background-color: #d0e5f7;
+      border-radius: 0.3rem;
+    }
+  }
 }

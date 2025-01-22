@@ -13,6 +13,9 @@ dotenv.config();
 const GEONAMES_BASEURL = process.env.GEONAMES_BASEURL;
 const GEONAMES_USER = process.env.GEONAMES_USER;
 
+const PIXABAY_BASEURL = process.env.PIXABAY_BASEURL;
+const PIXABAY_APIKEY = process.env.PIXABAY_APIKEY;
+
 const app = express();
 
 // Use cors to handle cross-origin requests and express.json() to parse JSON request bodies
@@ -45,7 +48,6 @@ const handleSuccessResponse = (res, statusCode = 200, data) => {
 //Function to handle call geoNames Api
 const getCountryInfo = async (req, res) => {
   const { city } = req.body;
-  console.log("🚀 ~ getCountryInfo ~ city:", req.body);
 
   if (!city) {
     return handleErrorResponse(res, 400, "City parameter is required.");
@@ -55,7 +57,6 @@ const getCountryInfo = async (req, res) => {
 
   try {
     const response = await axios.get(API);
-    console.log("🚀 ~ getCountryInfo ~ response:", response.data);
     return handleSuccessResponse(res, 200, response.data);
   } catch (error) {
     console.error(`Error fetching country info: ${error}`);
@@ -67,7 +68,60 @@ const getCountryInfo = async (req, res) => {
   }
 };
 
+// const forcestWeatherByDay = (req, res) => {
+//   const { baseApi, lat, long, reaminingDays } = req.body;
+//   try {
+//     const response = await axios.get(`${baseApi}lat=${lat}&lon=${long}&units=M`)
+//   } catch (error) {
+//     console.error(`Error fetching country info: ${error}`);
+//     return handleErrorResponse(
+//       res,
+//       500,
+//       "Failed to fetch forcest weather information."
+//     );
+//   }
+// };
+
+const getPlaceImage = async (req, res) => {
+  const { city, country } = req.body;
+  if (!city && !country) {
+    return handleErrorResponse(
+      res,
+      400,
+      "City and country parameters are required."
+    );
+  }
+
+  try {
+    const response = await axios.get(
+      `${PIXABAY_BASEURL}key=${PIXABAY_APIKEY}&q=${city}&image_type=photo&pretty=true&orientation=horizontal&category=nature`
+    );
+    if (response && response.data && response.data.hits.length > 0) {
+      return handleSuccessResponse(res, 200, response.data.hits[0]);
+    } else {
+      const response2 = await axios.get(
+        `${PIXABAY_BASEURL}key=${PIXABAY_APIKEY}&q=${city}&image_type=photo&pretty=true&orientation=horizontal&category=nature`
+      );
+      console.log("🚀 ~ getPlaceImage ~ response2:", response2);
+      if (response2.data && response2.data.hits.length > 0) {
+        return handleSuccessResponse(res, 200, response2.hits[0]);
+      } else {
+        return handleErrorResponse(
+          res,
+          404,
+          "No images found for the given city."
+        );
+      }
+    }
+  } catch (error) {
+    console.log("🚀 ~ getPlaceImage ~ error:", error);
+    return handleErrorResponse(res, 500, "Failed to fetch place image.");
+  }
+};
+
 app.post("/countryInfo", getCountryInfo);
+
+app.post("/getPlaceImage", getPlaceImage);
 
 app.listen(8080, () => {
   console.log("app running on port 8080!");

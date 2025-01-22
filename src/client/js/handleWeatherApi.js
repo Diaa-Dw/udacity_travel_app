@@ -15,7 +15,7 @@ const handleWeatherData = async (
     const baseApi = `https://api.weatherbit.io/v2.0/forecast/daily?`;
     axios.post("/forecastWeatherByDay", {
       baseApi,
-      days: reaminingDays,
+      reaminingDays,
       lat,
       long,
     });
