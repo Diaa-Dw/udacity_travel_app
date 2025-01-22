@@ -5,9 +5,8 @@ const axios = require("axios");
 
 dotenv.config();
 
-const BASEURL = process.env.BASEURL;
-const USERNAME = process.env.USER;
-console.log("🚀 ~ USERNAME:", USERNAME);
+const GEONAMES_BASEURL = process.env.GEONAMES_BASEURL;
+const GEONAMES_USER = process.env.GEONAMES_USER;
 
 const app = express();
 
@@ -25,7 +24,7 @@ app.get("/", (req, res) => {
 
 // Utility function to send consistent error responses
 const handleErrorResponse = (res, statusCode, message, error = null) => {
-  res.statusCode(statusCode).json({
+  res.status(statusCode).json({
     status: "error",
     statusCode,
     message,
@@ -35,7 +34,7 @@ const handleErrorResponse = (res, statusCode, message, error = null) => {
 
 // Utility function to send successs response
 const handleSuccessResponse = (res, statusCode = 200, data) => {
-  res.statusCode(statusCode).json({
+  res.status(statusCode).json({
     status: "success",
     statusCode,
     data,
@@ -44,16 +43,18 @@ const handleSuccessResponse = (res, statusCode = 200, data) => {
 
 const getCountryInfo = async (req, res) => {
   const { city } = req.body;
+  console.log("🚀 ~ getCountryInfo ~ city:", req.body);
 
   if (!city) {
     return handleErrorResponse(res, 400, "City parameter is required.");
   }
 
-  const API = `${BASEURL}q=${city}&maxRows=1&username=${USERNAME}`;
+  const API = `${GEONAMES_BASEURL}q=${city}&maxRows=1&username=${GEONAMES_USER}`;
 
   try {
     const response = await axios.get(API);
-    return handleSuccessResponse(res, 200, response);
+    console.log("🚀 ~ getCountryInfo ~ response:", response.data);
+    return handleSuccessResponse(res, 200, response.data);
   } catch (error) {
     console.error(`Error fetching country info: ${error}`);
     return handleErrorResponse(
@@ -64,28 +65,7 @@ const getCountryInfo = async (req, res) => {
   }
 };
 
-app.get("/cityInfo", async (req, res) => {
-  const { city } = req.body;
-  const API = `${BASEURL}q=${city}&maxRows=1&username=${USERNAME}`;
-  axios
-    .get(API)
-    .then((response) => {
-      res.end({
-        status: "success",
-        statusCode: 200,
-        data: response,
-      });
-    })
-    .catch((err) => {
-      res.end({
-        status: "error",
-        statusCode: 500,
-        error: err,
-      });
-    });
-});
-
-app.get("/countryInfo", getCountryInfo);
+app.post("/countryInfo", getCountryInfo);
 
 app.listen(8080, () => {
   console.log("app running on port 8080!");

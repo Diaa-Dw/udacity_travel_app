@@ -16,6 +16,10 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.html$/,
+        use: ["html-loader"], // Processes HTML files to handle image imports
+      },
+      {
         test: /\.js$/,
         exclude: /node_modules/,
         loader: "babel-loader",
@@ -30,7 +34,10 @@ module.exports = {
       },
       {
         test: /\.(png|jpe?g|gif|svg)$/i,
-        type: "asset/resource",
+        type: "asset/resource", // Handles image files
+        generator: {
+          filename: "assets/images/[name][hash][ext][query]", // Customize output directory
+        },
       },
     ],
   },

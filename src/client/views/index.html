@@ -7,35 +7,73 @@
       href="https://fonts.googleapis.com/css?family=Oswald:400,600,700|Ranga:400,700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <div id="app">
-      <div class="holder headline">Weather Journal App</div>
-      <div class="holder zip">
-        <label for="city">Enter City here</label>
-        <input type="text" id="city" placeholder="enter city here" />
-      </div>
-      <div class="holder feel">
-        <label for="feelings">How are you feeling today?</label>
-        <textarea
-          class="myInput"
-          id="feelings"
-          placeholder="Enter your feelings here"
-          rows="9"
-          cols="50"
-        ></textarea>
-        <button id="generate" type="submit">Generate</button>
-      </div>
-      <div class="holder entry">
-        <div class="title">Most Recent Entry</div>
-        <div id="entryHolder">
-          <div id="date"></div>
-          <div id="temp"></div>
-          <div id="content"></div>
+      <header class="header test">
+        <img
+          class="header__logo"
+          src="../media/images/logo.png"
+          alt="travel_planer_logo"
+        />
+      </header>
+      <form class="trip-form">
+        <div class="input-container">
+          <label for="city"> Trip To:</label>
+          <input
+            class="input"
+            type="text"
+            id="city"
+            placeholder="enter city here"
+          />
+        </div>
+        <div class="input-container">
+          <label for="dateInput"> Departure Date:</label>
+
+          <input class="input" type="date" id="dateInput" />
+        </div>
+        <button class="btn btn-primary" id="generate" type="submit">
+          Generate
+        </button>
+      </form>
+
+      <div class="trips-container">
+        <div class="trip">
+          <img
+            src="../media/images/trip.jpg"
+            alt="istanbul"
+            class="trip__image"
+          />
+          <div class="trip__informations">
+            <h2 class="trip__destination trip__info">
+              <img
+                src="../media/images/maps-and-flags.png"
+                alt="maps and flag icon"
+                class="trip__icon"
+              />
+              <span>Destantion To: </span>
+              <span class="mark-text"> Istanbul </span>
+            </h2>
+            <h2 class="trip__departure trip__info">
+              <img
+                src="../media/images/calendar.png"
+                alt="calender"
+                class="trip__icon"
+              />
+              <span>Departue Date: </span>
+              <span class="mark-text"> 02/22/2025 </span>
+            </h2>
+          </div>
+
+          <div class="trip__counter"></div>
+
+          <div class="weather-holder">
+            <h3 class="weather-holder__title">
+              Historical weather on this same day for the past 3 years:
+            </h3>
+          </div>
         </div>
       </div>
     </div>
-    <script src="app.js" type="text/javascript"></script>
   </body>
 </html>

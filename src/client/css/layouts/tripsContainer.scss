@@ -1,0 +1,41 @@
+.trips-container {
+  display: flex;
+  justify-content: space-around;
+  margin: 2.4rem;
+}
+.trip {
+  width: 33%;
+  max-width: 38rem;
+  background-color: #d0e5f7;
+  border-radius: 0.8rem;
+  overflow: hidden;
+  & * {
+    padding: 0.4rem 0.8rem;
+  }
+  img {
+    width: 100%;
+    padding: 0;
+  }
+}
+
+.trip__info * {
+  width: max-content;
+  padding: 0.4rem 0.8rem;
+}
+
+.trip__info {
+  display: flex;
+  align-items: center;
+  margin: 1.5rem 0.6rem;
+  font-size: 1.2rem;
+  img {
+    width: 2rem;
+    padding: 0;
+  }
+}
+
+.mark-text {
+  background-color: rgb(242, 255, 165);
+  padding: 0.3rem 1.2rem;
+  border-radius: 0.5rem;
+}

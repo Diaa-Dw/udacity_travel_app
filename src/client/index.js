@@ -1,1 +1,3 @@
-import "./js/countryInfoHandler";
+import "./css/main.scss";
+import "./js/app";
+
