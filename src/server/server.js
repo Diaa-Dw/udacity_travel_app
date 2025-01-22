@@ -1,23 +1,25 @@
-const path = require("path");
 const express = require("express");
+const cors = require("cors");
 const dotenv = require("dotenv");
 const axios = require("axios");
 
+//Customer functions
+const getLatestThreeYearsDate = require("./getLatestThreeYears");
+
+//Using dotenv to access variables that initalized in the .env file
 dotenv.config();
 
+//Geting the base url of geonames and user-name to access api
 const GEONAMES_BASEURL = process.env.GEONAMES_BASEURL;
 const GEONAMES_USER = process.env.GEONAMES_USER;
 
 const app = express();
 
-const cors = require("cors");
-const { error } = require("console");
-
+// Use cors to handle cross-origin requests and express.json() to parse JSON request bodies
 app.use(cors());
 app.use(express.json());
 
 app.use(express.static("dist"));
-
 app.get("/", (req, res) => {
   res.sendFile("dist/index.html");
 });
@@ -40,7 +42,7 @@ const handleSuccessResponse = (res, statusCode = 200, data) => {
     data,
   });
 };
-
+//Function to handle call geoNames Api
 const getCountryInfo = async (req, res) => {
   const { city } = req.body;
   console.log("🚀 ~ getCountryInfo ~ city:", req.body);
