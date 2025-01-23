@@ -16,6 +16,8 @@ const GEONAMES_USER = process.env.GEONAMES_USER;
 const PIXABAY_BASEURL = process.env.PIXABAY_BASEURL;
 const PIXABAY_APIKEY = process.env.PIXABAY_APIKEY;
 
+const WEATHERBIT_APIKEY = process.env.WEATHERBIT_APIKEY;
+
 const app = express();
 
 // Use cors to handle cross-origin requests and express.json() to parse JSON request bodies
@@ -68,19 +70,63 @@ const getCountryInfo = async (req, res) => {
   }
 };
 
-// const forcestWeatherByDay = (req, res) => {
-//   const { baseApi, lat, long, reaminingDays } = req.body;
-//   try {
-//     const response = await axios.get(`${baseApi}lat=${lat}&lon=${long}&units=M`)
-//   } catch (error) {
-//     console.error(`Error fetching country info: ${error}`);
-//     return handleErrorResponse(
-//       res,
-//       500,
-//       "Failed to fetch forcest weather information."
-//     );
-//   }
-// };
+const forcestWeatherByDay = async (req, res) => {
+  const { baseUrl, lat, long, reaminingDays } = req.body;
+
+  try {
+    const response = await axios.get(
+      `${baseUrl}lat=${lat}&lon=${long}&units=M&days=${reaminingDays}&key=${WEATHERBIT_APIKEY}`
+    );
+    return handleSuccessResponse(
+      res,
+      200,
+      response.data.data[response.data.data.length - 1]
+    );
+  } catch (error) {
+    console.error(`Error fetching country info: ${error}`);
+    return handleErrorResponse(
+      res,
+      500,
+      "Failed to fetch forcest weather information."
+    );
+  }
+};
+
+const historyWeatherforLatestThreeYears = async (req, res) => {
+  const { baseUrl, lat, long, travelDate } = req.body;
+  const latestThreeYears = getLatestThreeYearsDate(travelDate);
+  console.log(
+    "🚀 ~ historyWeatherforLatestThreeYears ~ latestThreeYears:",
+    latestThreeYears
+  );
+
+  const urls = latestThreeYears.map(
+    ({ startDate, endDate }) =>
+      `${baseUrl}lat=${lat}&lon=${long}&start_date=${startDate}&end_date=${endDate}&key=${WEATHERBIT_APIKEY}`
+  );
+
+  try {
+    const promises = urls.map((url) => axios.get(url));
+    const responses = await Promise.all(promises);
+    console.log(
+      "🚀 ~ historyWeatherforLatestThreeYears ~ responses:",
+      responses
+    );
+    console.log(
+      "🚀 ~ historyWeatherforLatestThreeYears ~ responses:",
+      responses[0].data.data
+    );
+    const data = responses.map((resp) => resp.data.data);
+    return handleSuccessResponse(res, 200, data);
+  } catch (error) {
+    console.error(`Error fetching country info: ${error}`);
+    return handleErrorResponse(
+      res,
+      500,
+      "Failed to fetch forcest weather information."
+    );
+  }
+};
 
 const getPlaceImage = async (req, res) => {
   const { city, country } = req.body;
@@ -122,6 +168,12 @@ const getPlaceImage = async (req, res) => {
 app.post("/countryInfo", getCountryInfo);
 
 app.post("/getPlaceImage", getPlaceImage);
+
+app.post("/forecastWeatherByDay", forcestWeatherByDay);
+app.post(
+  "/historyWeatherforLatestThreeYears",
+  historyWeatherforLatestThreeYears
+);
 
 app.listen(8080, () => {
   console.log("app running on port 8080!");

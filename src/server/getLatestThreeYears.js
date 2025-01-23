@@ -1,7 +1,7 @@
 const getLatestThreeYearsDate = (userDate) => {
   const res = [];
   const targetDate = new Date(userDate);
-  for (let i = 3; i >= 1; i--) {
+  for (let i = 1; i <= 3; i++) {
     let startDate = new Date(targetDate);
     startDate.setFullYear(startDate.getFullYear() - i);
     let endDate = new Date(startDate);
