@@ -6,7 +6,7 @@ const daysCounter = (inputDate) => {
   const travelDate = inputDate;
   const differnceInMS = new Date(travelDate) - new Date(currentDate);
   const differnceInDay = differnceInMS / (1000 * 60 * 60 * 24);
-  return Math.ceil(differnceInDay);
+  return Math.round(differnceInDay);
 };
 
 export default daysCounter;

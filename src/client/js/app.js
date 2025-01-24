@@ -11,8 +11,9 @@ const cityInput = document.getElementById("city");
 const dateInputEl = document.getElementById("dateInput");
 const tripsContainer = document.querySelector(".trips-container");
 
+//Check if there is trips in localStorage and get them.
 let tripsData = JSON.parse(localStorage.getItem("trips")) || [];
-
+//If there trips in the localStorage display them.
 if (tripsData.length !== 0) {
   tripsData.map((trip) => updateUI(trip));
 }
@@ -55,6 +56,8 @@ tripsContainer.addEventListener("click", (event) => {
   }
 });
 
+
+//Event to save trips into localStorage before closing the tab  
 window.addEventListener("beforeunload", () => {
   localStorage.setItem("trips", JSON.stringify(tripsData));
 });
