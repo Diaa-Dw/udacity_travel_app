@@ -4,5 +4,12 @@
   padding: 2rem 1.8rem;
   justify-content: space-around;
   align-items: center;
-  background-color: #f4f5cd;
+  width: 100%;
+  max-width: 120rem;
+}
+
+@media only screen and (max-width: 650px) {
+  .trip-form {
+    flex-direction: column;
+  }
 }

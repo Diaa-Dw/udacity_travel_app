@@ -1,0 +1,60 @@
+.weather-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.weather__forcast {
+  h3 {
+    font-size: 1.4rem;
+    font-weight: 400;
+    text-align: center;
+    span {
+      background-color: #e6f6c1;
+      font-weight: 500;
+      border-radius: 0.3rem;
+    }
+  }
+}
+
+.weather__forcast__information,
+.weather__history__information {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.weather__forcast__information__row {
+  display: flex;
+  font-size: 1.2rem;
+}
+
+.weather__forcast__information__row img {
+  width: 8rem;
+}
+.weather__overview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.weather__date {
+  display: flex;
+  align-items: center;
+  background-color: #e6f6c1;
+  border-radius: 0.5rem;
+  gap: 0;
+  img {
+    width: 3.5rem;
+  }
+}
+
+.low-temp {
+  background-color: #8d9efc;
+  border-radius: 0.3rem;
+}
+.high-temp {
+  background-color: #fdf5a7;
+  border-radius: 0.3rem;
+}

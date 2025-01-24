@@ -14,3 +14,17 @@ body {
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   line-height: 1.6;
 }
+
+.wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.wrapper-yellow {
+  background-color: #f4f5cd;
+}
+
+.wrapper-blue {
+  background-color: #d0e5f7;
+}

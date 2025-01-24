@@ -1,6 +1,7 @@
 .btn {
   padding: 1.2rem 1.8rem;
   font-size: 1.4rem;
+  font-weight: bolder;
   outline: none;
   border: none;
   border-radius: 0.5rem;
@@ -12,9 +13,19 @@
 
 .btn-primary {
   background-color: #87c7ff;
-  background-color: $primary-color;
   &:hover {
     background-color: transparent;
     border: 0.2rem solid #87c7ff;
+  }
+}
+
+.trip .btn-delete {
+  align-self: center;
+  padding: 1.2rem 1.8rem;
+  margin: 2rem 0;
+  background-color: #ff6c85;
+  &:hover {
+    background-color: transparent;
+    border: 0.2rem solid #ff6c85;
   }
 }

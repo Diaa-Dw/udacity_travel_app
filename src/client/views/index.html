@@ -5,73 +5,40 @@
     <title>Weather Journal</title>
   </head>
   <body>
-    <div id="app">
-      <header class="header test">
-        <img
-          class="header__logo"
-          src="../media/images/logo.png"
-          alt="travel_planer_logo"
-        />
-      </header>
-      <form class="trip-form">
-        <div class="input-container">
-          <label for="city"> Trip To:</label>
-          <input
-            class="input"
-            type="text"
-            id="city"
-            placeholder="enter city here"
-          />
-        </div>
-        <div class="input-container">
-          <label for="dateInput"> Departure Date:</label>
-
-          <input class="input" type="date" id="dateInput" />
-        </div>
-        <button class="btn btn-primary" id="generate" type="submit">
-          Generate
-        </button>
-      </form>
-
-      <div class="trips-container">
-        <div class="trip">
+    <div class="app">
+      <div class="wrapper wrapper-blue">
+        <header class="header">
           <img
-            src="../media/images/trip.jpg"
-            alt="istanbul"
-            class="trip__image"
+            class="header__logo"
+            src="../media/images/logo.png"
+            alt="travel_planer_logo"
           />
-          <div class="trip__informations">
-            <h2 class="trip__destination trip__info">
-              <img
-                src="../media/images/maps-and-flags.png"
-                alt="maps and flag icon"
-                class="trip__icon"
-              />
-              <span>Destantion To: </span>
-              <span class="mark-text"> Istanbul </span>
-            </h2>
-            <h2 class="trip__departure trip__info">
-              <img
-                src="../media/images/calendar.png"
-                alt="calender"
-                class="trip__icon"
-              />
-              <span>Departue Date: </span>
-              <span class="mark-text"> 02/22/2025 </span>
-            </h2>
+        </header>
+      </div>
+      <div class="wrapper wrapper-yellow">
+        <form class="trip-form">
+          <div class="input-container">
+            <label for="city"> Trip To:</label>
+            <input
+              class="input"
+              type="text"
+              id="city"
+              placeholder="enter city here"
+            />
           </div>
+          <div class="input-container">
+            <label for="dateInput"> Departure Date:</label>
 
-          <div class="trip__counter">
-            <img src="../media/images/clock.png" alt="clock" class="icon" />
-            <p class="trip_counter_descrption">London, United Kingdom is <span>33 days</span> away!</p>
+            <input class="input" type="date" id="dateInput" />
           </div>
+          <button class="btn btn-primary" id="generate" type="submit">
+            Generate
+          </button>
+        </form>
+      </div>
 
-          <div class="weather-holder">
-            <h3 class="weather-holder__title">
-              Historical weather on this same day for the past 3 years:
-            </h3>
-          </div>
-        </div>
+      <div class="wrapper">
+        <div class="trips-container"></div>
       </div>
     </div>
   </body>
