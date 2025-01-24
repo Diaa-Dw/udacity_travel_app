@@ -4,12 +4,8 @@
 - [Overview](#overview)
 - [Features](#features)
 - [Setup and Installation](#setup-and-installation)
-- [Project Structure](#project-structure)
 - [APIs Used](#apis-used)
 - [How to Use](#how-to-use)
-- [Development Workflow](#development-workflow)
-- [Refactoring and Standards](#refactoring-and-standards)
-- [Future Improvements](#future-improvements)
 
 ---
 
