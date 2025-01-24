@@ -11,9 +11,11 @@ const cityInput = document.getElementById("city");
 const dateInputEl = document.getElementById("dateInput");
 const tripsContainer = document.querySelector(".trips-container");
 
-const tripsData = [];
+let tripsData = JSON.parse(localStorage.getItem("trips")) || [];
 
-notify("success", "hello");
+if (tripsData.length !== 0) {
+  tripsData.map((trip) => updateUI(trip));
+}
 
 generateBtn.addEventListener("click", async (e) => {
   e.preventDefault();
@@ -51,4 +53,8 @@ tripsContainer.addEventListener("click", (event) => {
       container.remove();
     }
   }
+});
+
+window.addEventListener("beforeunload", () => {
+  localStorage.setItem("trips", JSON.stringify(tripsData));
 });
