@@ -1,6 +1,7 @@
 import { getCountryInfo } from "./countryInfoHandler";
 import "./datePickerHandler";
 import daysCounter from "./daysCounter";
+import notify from "./notifyHandler";
 import handlePlaceImage from "./handlePalceImage";
 import handleWeatherData from "./handleWeatherApi";
 import isValidDate from "./isValidDate";
@@ -12,38 +13,34 @@ const tripsContainer = document.querySelector(".trips-container");
 
 const tripsData = [];
 
+notify("success", "hello");
+
 generateBtn.addEventListener("click", async (e) => {
   e.preventDefault();
   const trip = {};
   const cityValue = cityInput.value;
   const userInutDate = dateInputEl.value;
   trip.travelDate = userInutDate;
-
-  console.log(
-    "🚀 ~ generateBtn.addEventListener ~ !isValidDate(userInutDate):",
-    !isValidDate(userInutDate)
-  );
-  if (isValidDate(userInutDate)) {
-    console.log("valid");
-    console.log("🚀 ~ generateBtn.addEventListener ~ cityValue:", cityValue);
-    trip.destinationData = await getCountryInfo(cityValue);
-    console.log("🚀 ~ generateBtn.addEventListener ~ trip:", trip);
-
-    trip.placeImage = await handlePlaceImage(trip.destinationData);
-
-    trip.remainingDays = daysCounter(userInutDate);
-
-    trip.weatherData = await handleWeatherData(
-      trip.remainingDays,
-      trip.destinationData,
-      trip.travelDate
-    );
-    trip.id = tripsData.length;
-    updateUI(trip);
-    tripsData.push(trip);
-  } else {
-    console.log("not valid");
+  if (!cityValue) {
+    return notify("error", "Please enter destination of the trip");
   }
+  if (!isValidDate(userInutDate)) {
+    return notify("error", "Please enter a vaild date.");
+  }
+  trip.destinationData = await getCountryInfo(cityValue);
+
+  trip.placeImage = await handlePlaceImage(trip.destinationData);
+
+  trip.remainingDays = daysCounter(userInutDate);
+
+  trip.weatherData = await handleWeatherData(
+    trip.remainingDays,
+    trip.destinationData,
+    trip.travelDate
+  );
+  trip.id = tripsData.length;
+  updateUI(trip);
+  tripsData.push(trip);
 });
 
 //Event listener to handle delete trip when click the button

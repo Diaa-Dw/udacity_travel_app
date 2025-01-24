@@ -1,3 +1,5 @@
+import notify from "./notifyHandler";
+
 const { default: axios } = require("axios");
 
 const handlePlaceImage = async (destantionData) => {
@@ -10,8 +12,11 @@ const handlePlaceImage = async (destantionData) => {
       city,
       country,
     });
-    return response.data.data.largeImageURL
+    return response.data.data.largeImageURL;
   } catch (error) {
+    const message =
+      error.message || "Somthing went wrong while fetching place image.";
+    notify("error", message);
     console.log("🚀 ~ handlePlaceImage ~ error:", error);
   }
 };

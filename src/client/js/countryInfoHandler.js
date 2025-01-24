@@ -1,4 +1,5 @@
 import axios from "axios";
+import notify from "./notifyHandler";
 
 export const getCountryInfo = async (city) => {
   try {
@@ -13,9 +14,12 @@ export const getCountryInfo = async (city) => {
       city: geonames[0].name,
       country: geonames[0].countryName,
     };
-    console.log("🚀 ~ getCountryInfo ~ destinationData:", destinationData);
     return destinationData;
   } catch (error) {
+    const message =
+      error.message || "Somthing went wrong while fetching destanation data.";
+
+    notify("error", message);
     console.log("🚀 ~ getCountryInfo ~ error:", error);
   }
 };
