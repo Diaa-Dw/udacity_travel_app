@@ -18,6 +18,11 @@ if (tripsData.length !== 0) {
   tripsData.map((trip) => updateUI(trip));
 }
 
+const toggleButtonDisable = (value) => {
+  generateBtn.classList.toggle("btn-disabled");
+  generateBtn.disabled = value;
+};
+
 generateBtn.addEventListener("click", async (e) => {
   e.preventDefault();
   const trip = {};
@@ -30,20 +35,30 @@ generateBtn.addEventListener("click", async (e) => {
   if (!isValidDate(userInutDate)) {
     return notify("error", "Please enter a vaild date.");
   }
-  trip.destinationData = await getCountryInfo(cityValue);
+  try {
+    toggleButtonDisable(true);
+    trip.remainingDays = daysCounter(userInutDate);
+    if (trip.remainingDays <= 0) {
+      throw new Error("Invalid selected date please select future date.");
+    }
+    trip.destinationData = await getCountryInfo(cityValue);
 
-  trip.placeImage = await handlePlaceImage(trip.destinationData);
+    trip.placeImage = await handlePlaceImage(trip.destinationData);
 
-  trip.remainingDays = daysCounter(userInutDate);
-
-  trip.weatherData = await handleWeatherData(
-    trip.remainingDays,
-    trip.destinationData,
-    trip.travelDate
-  );
-  trip.id = tripsData.length;
-  updateUI(trip);
-  tripsData.push(trip);
+    trip.weatherData = await handleWeatherData(
+      trip.remainingDays,
+      trip.destinationData,
+      trip.travelDate
+    );
+    trip.id = tripsData.length;
+    updateUI(trip);
+    tripsData.push(trip);
+    // toggleButtonDisable(true);
+  } catch (error) {
+    notify("error", error.message);
+  } finally {
+    toggleButtonDisable(false);
+  }
 });
 
 //Event listener to handle delete trip when click the button
@@ -56,8 +71,7 @@ tripsContainer.addEventListener("click", (event) => {
   }
 });
 
-
-//Event to save trips into localStorage before closing the tab  
+//Event to save trips into localStorage before closing the tab
 window.addEventListener("beforeunload", () => {
   localStorage.setItem("trips", JSON.stringify(tripsData));
 });

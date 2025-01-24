@@ -2,7 +2,6 @@ const path = require("path");
 const webpack = require("webpack");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const loader = require("sass-loader");
 
 module.exports = {
   entry: "./src/client/index.js",
@@ -60,7 +59,7 @@ module.exports = {
   devServer: {
     static: path.resolve("./dist"),
     port: 3000,
-    open: false,
+    open: true,
     hot: true,
     allowedHosts: "all",
   },

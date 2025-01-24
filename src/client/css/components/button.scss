@@ -29,3 +29,8 @@
     border: 0.2rem solid #ff6c85;
   }
 }
+
+.btn-disabled {
+  cursor: not-allowed;
+  background-color: #7c8191;
+}

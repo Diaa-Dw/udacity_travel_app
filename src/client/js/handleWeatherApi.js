@@ -5,6 +5,7 @@ const handleWeatherData = async (
   destinationData,
   travelDate
 ) => {
+  console.log("🚀 ~ reaminingDays:", reaminingDays);
   try {
     if (reaminingDays <= 0) {
       return;
@@ -32,6 +33,7 @@ const handleWeatherData = async (
           long,
         }
       );
+      console.log("🚀 ~ response:", response);
 
       res.push(response.data.data);
     }
@@ -54,6 +56,7 @@ const handleWeatherData = async (
         travelDate,
       }
     );
+    console.log("🚀 ~ response:", response);
     res = [...res, ...response.data.data];
     return res;
   } catch (error) {
