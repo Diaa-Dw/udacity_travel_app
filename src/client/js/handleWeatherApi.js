@@ -7,13 +7,13 @@ const handleWeatherData = async (
 ) => {
   console.log("🚀 ~ reaminingDays:", reaminingDays);
   try {
-    if (reaminingDays <= 0) {
-      return;
+    if (reaminingDays < 0) {
+      throw new Error("Entered Date is invalid!");
     }
     let res = [];
     const lat = destinationData.lat;
     const long = destinationData.long;
-    if (reaminingDays <= 16) {
+    if (reaminingDays > 0 && reaminingDays <= 16) {
       // https://api.weatherbit.io/v2.0/forecast/daily?lat=41.015137&lon=28.979530&units=M&days=90&key=1ab71fff6f784451b7c66034c65d87d9
 
       const baseUrl = `https://api.weatherbit.io/v2.0/forecast/daily?`;

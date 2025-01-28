@@ -38,7 +38,7 @@ generateBtn.addEventListener("click", async (e) => {
   try {
     toggleButtonDisable(true);
     trip.remainingDays = daysCounter(userInutDate);
-    if (trip.remainingDays <= 0) {
+    if (trip.remainingDays < 0) {
       throw new Error("Invalid selected date please select future date.");
     }
     trip.destinationData = await getCountryInfo(cityValue);
