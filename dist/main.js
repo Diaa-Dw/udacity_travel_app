@@ -55,47 +55,62 @@ generateBtn.addEventListener("click", /*#__PURE__*/function () {
       while (1) switch (_context.prev = _context.next) {
         case 0:
           e.preventDefault();
-          toggleButtonDisable(false);
           trip = {};
           cityValue = cityInput.value;
           userInutDate = dateInputEl.value;
           trip.travelDate = userInutDate;
           if (cityValue) {
+            _context.next = 7;
+            break;
+          }
+          return _context.abrupt("return", (0,_notifyHandler__WEBPACK_IMPORTED_MODULE_3__["default"])("error", "Please enter destination of the trip"));
+        case 7:
+          if ((0,_isValidDate__WEBPACK_IMPORTED_MODULE_6__["default"])(userInutDate)) {
             _context.next = 9;
             break;
           }
-          toggleButtonDisable(true);
-          return _context.abrupt("return", (0,_notifyHandler__WEBPACK_IMPORTED_MODULE_3__["default"])("error", "Please enter destination of the trip"));
+          return _context.abrupt("return", (0,_notifyHandler__WEBPACK_IMPORTED_MODULE_3__["default"])("error", "Please enter a vaild date."));
         case 9:
-          if ((0,_isValidDate__WEBPACK_IMPORTED_MODULE_6__["default"])(userInutDate)) {
-            _context.next = 12;
+          _context.prev = 9;
+          toggleButtonDisable(true);
+          trip.remainingDays = (0,_daysCounter__WEBPACK_IMPORTED_MODULE_2__["default"])(userInutDate);
+          if (!(trip.remainingDays <= 0)) {
+            _context.next = 14;
             break;
           }
-          toggleButtonDisable(true);
-          return _context.abrupt("return", (0,_notifyHandler__WEBPACK_IMPORTED_MODULE_3__["default"])("error", "Please enter a vaild date."));
-        case 12:
-          _context.next = 14;
-          return (0,_countryInfoHandler__WEBPACK_IMPORTED_MODULE_0__.getCountryInfo)(cityValue);
+          throw new Error("Invalid selected date please select future date.");
         case 14:
+          _context.next = 16;
+          return (0,_countryInfoHandler__WEBPACK_IMPORTED_MODULE_0__.getCountryInfo)(cityValue);
+        case 16:
           trip.destinationData = _context.sent;
-          _context.next = 17;
+          _context.next = 19;
           return (0,_handlePalceImage__WEBPACK_IMPORTED_MODULE_4__["default"])(trip.destinationData);
-        case 17:
+        case 19:
           trip.placeImage = _context.sent;
-          trip.remainingDays = (0,_daysCounter__WEBPACK_IMPORTED_MODULE_2__["default"])(userInutDate);
-          _context.next = 21;
+          _context.next = 22;
           return (0,_handleWeatherApi__WEBPACK_IMPORTED_MODULE_5__["default"])(trip.remainingDays, trip.destinationData, trip.travelDate);
-        case 21:
+        case 22:
           trip.weatherData = _context.sent;
           trip.id = tripsData.length;
           (0,_updateUI__WEBPACK_IMPORTED_MODULE_7__["default"])(trip);
           tripsData.push(trip);
-          toggleButtonDisable(true);
-        case 26:
+          // toggleButtonDisable(true);
+          _context.next = 31;
+          break;
+        case 28:
+          _context.prev = 28;
+          _context.t0 = _context["catch"](9);
+          (0,_notifyHandler__WEBPACK_IMPORTED_MODULE_3__["default"])("error", _context.t0.message);
+        case 31:
+          _context.prev = 31;
+          toggleButtonDisable(false);
+          return _context.finish(31);
+        case 34:
         case "end":
           return _context.stop();
       }
-    }, _callee);
+    }, _callee, null, [[9, 28, 31, 34]]);
   }));
   return function (_x) {
     return _ref.apply(this, arguments);
@@ -307,34 +322,36 @@ var handleWeatherData = /*#__PURE__*/function () {
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
-          _context.prev = 0;
+          console.log("🚀 ~ reaminingDays:", reaminingDays);
+          _context.prev = 1;
           if (!(reaminingDays <= 0)) {
-            _context.next = 3;
+            _context.next = 4;
             break;
           }
           return _context.abrupt("return");
-        case 3:
+        case 4:
           res = [];
           lat = destinationData.lat;
           _long = destinationData["long"];
           if (!(reaminingDays <= 16)) {
-            _context.next = 13;
+            _context.next = 15;
             break;
           }
           // https://api.weatherbit.io/v2.0/forecast/daily?lat=41.015137&lon=28.979530&units=M&days=90&key=1ab71fff6f784451b7c66034c65d87d9
           _baseUrl = "https://api.weatherbit.io/v2.0/forecast/daily?";
           console.log("🚀 ~      baseUrl,reaminingDays,lat,long,:", _baseUrl, reaminingDays, lat, _long);
-          _context.next = 11;
+          _context.next = 12;
           return axios__WEBPACK_IMPORTED_MODULE_0__["default"].post("http://localhost:8080/forecastWeatherByDay", {
             baseUrl: _baseUrl,
             reaminingDays: reaminingDays,
             lat: lat,
             "long": _long
           });
-        case 11:
+        case 12:
           _response = _context.sent;
+          console.log("🚀 ~ response:", _response);
           res.push(_response.data.data);
-        case 13:
+        case 15:
           if (reaminingDays > 356) {
             date = new Date();
             TDate = new Date(travelDate);
@@ -343,28 +360,29 @@ var handleWeatherData = /*#__PURE__*/function () {
             travelDate = "".concat(date.getFullYear(), "-").concat(month, "-").concat(day);
           }
           baseUrl = "https://api.weatherbit.io/v2.0/history/daily?";
-          _context.next = 17;
+          _context.next = 19;
           return axios__WEBPACK_IMPORTED_MODULE_0__["default"].post("http://localhost:8080/historyWeatherforLatestThreeYears", {
             baseUrl: baseUrl,
             lat: lat,
             "long": _long,
             travelDate: travelDate
           });
-        case 17:
+        case 19:
           response = _context.sent;
+          console.log("🚀 ~ response:", response);
           res = [].concat(_toConsumableArray(res), _toConsumableArray(response.data.data));
           return _context.abrupt("return", res);
-        case 22:
-          _context.prev = 22;
-          _context.t0 = _context["catch"](0);
+        case 25:
+          _context.prev = 25;
+          _context.t0 = _context["catch"](1);
           message = _context.t0.message || "Somthing went wrong while fetching place image.";
           notify("error", message);
           console.log("🚀 ~ error:", _context.t0);
-        case 27:
+        case 30:
         case "end":
           return _context.stop();
       }
-    }, _callee, null, [[0, 22]]);
+    }, _callee, null, [[1, 25]]);
   }));
   return function handleWeatherData(_x, _x2, _x3) {
     return _ref.apply(this, arguments);
@@ -591,6 +609,7 @@ body {
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   line-height: 1.6;
+  min-height: 100vh;
 }
 
 .wrapper {
@@ -606,7 +625,7 @@ body {
 .wrapper-blue {
   background-color: #d0e5f7;
 }
-`, "",{"version":3,"sources":["webpack://./src/client/css/base/_base.scss"],"names":[],"mappings":"AAAA;;EAEE,UAAU;EACV,SAAS;EACT,sBAAsB;AACxB;AACA;EACE,gBAAgB;AAClB;;AAEA;EACE,iBAAiB;EACjB;sDACoD;EACpD,gBAAgB;AAClB;;AAEA;EACE,WAAW;EACX,aAAa;EACb,uBAAuB;EACvB,mBAAmB;AACrB;AACA;EACE,yBAAyB;AAC3B;;AAEA;EACE,yBAAyB;AAC3B","sourcesContent":["*,\r\nhtml {\r\n  padding: 0;\r\n  margin: 0;\r\n  box-sizing: border-box;\r\n}\r\nhtml {\r\n  font-size: 62.5%;\r\n}\r\n\r\nbody {\r\n  font-size: 1.6rem;\r\n  font-family: \"Lucida Sans\", \"Lucida Sans Regular\", \"Lucida Grande\",\r\n    \"Lucida Sans Unicode\", Geneva, Verdana, sans-serif;\r\n  line-height: 1.6;\r\n}\r\n\r\n.wrapper {\r\n  width: 100%;\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n}\r\n.wrapper-yellow {\r\n  background-color: #f4f5cd;\r\n}\r\n\r\n.wrapper-blue {\r\n  background-color: #d0e5f7;\r\n}\r\n"],"sourceRoot":""}]);
+`, "",{"version":3,"sources":["webpack://./src/client/css/base/_base.scss"],"names":[],"mappings":"AAAA;;EAEE,UAAU;EACV,SAAS;EACT,sBAAsB;AACxB;AACA;EACE,gBAAgB;AAClB;;AAEA;EACE,iBAAiB;EACjB;sDACoD;EACpD,gBAAgB;EAChB,iBAAiB;AACnB;;AAEA;EACE,WAAW;EACX,aAAa;EACb,uBAAuB;EACvB,mBAAmB;AACrB;AACA;EACE,yBAAyB;AAC3B;;AAEA;EACE,yBAAyB;AAC3B","sourcesContent":["*,\r\nhtml {\r\n  padding: 0;\r\n  margin: 0;\r\n  box-sizing: border-box;\r\n}\r\nhtml {\r\n  font-size: 62.5%;\r\n}\r\n\r\nbody {\r\n  font-size: 1.6rem;\r\n  font-family: \"Lucida Sans\", \"Lucida Sans Regular\", \"Lucida Grande\",\r\n    \"Lucida Sans Unicode\", Geneva, Verdana, sans-serif;\r\n  line-height: 1.6;\r\n  min-height: 100vh;\r\n}\r\n\r\n.wrapper {\r\n  width: 100%;\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n}\r\n.wrapper-yellow {\r\n  background-color: #f4f5cd;\r\n}\r\n\r\n.wrapper-blue {\r\n  background-color: #d0e5f7;\r\n}\r\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -731,8 +750,6 @@ __webpack_require__.r(__webpack_exports__);
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, `.footer {
-  position: absolute;
-  bottom: 0;
   text-align: center;
   padding: 2rem;
   font-size: 1.6rem;
@@ -742,7 +759,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.footer {
 .footer__paragraph a {
   color: #2b2930;
 }
-`, "",{"version":3,"sources":["webpack://./src/client/css/layouts/footer.scss"],"names":[],"mappings":"AAAA;EACE,kBAAkB;EAClB,SAAS;EACT,kBAAkB;EAClB,aAAa;EACb,iBAAiB;EACjB,gBAAgB;AAClB;;AAEA;EACE,cAAc;AAChB","sourcesContent":[".footer {\r\n  position: absolute;\r\n  bottom: 0;\r\n  text-align: center;\r\n  padding: 2rem;\r\n  font-size: 1.6rem;\r\n  font-weight: 500;\r\n}\r\n\r\n.footer__paragraph a {\r\n  color: #2b2930;\r\n}\r\n"],"sourceRoot":""}]);
+`, "",{"version":3,"sources":["webpack://./src/client/css/layouts/footer.scss"],"names":[],"mappings":"AAAA;EACE,kBAAkB;EAClB,aAAa;EACb,iBAAiB;EACjB,gBAAgB;AAClB;;AAEA;EACE,cAAc;AAChB","sourcesContent":[".footer {\r\n  text-align: center;\r\n  padding: 2rem;\r\n  font-size: 1.6rem;\r\n  font-weight: 500;\r\n}\r\n\r\n.footer__paragraph a {\r\n  color: #2b2930;\r\n}\r\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

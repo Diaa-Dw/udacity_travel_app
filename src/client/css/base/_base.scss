@@ -15,6 +15,10 @@ body {
   line-height: 1.6;
 }
 
+.app {
+  min-height: calc(100vh - 7rem);
+}
+
 .wrapper {
   width: 100%;
   display: flex;

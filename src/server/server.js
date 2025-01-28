@@ -108,14 +108,7 @@ const historyWeatherforLatestThreeYears = async (req, res) => {
   try {
     const promises = urls.map((url) => axios.get(url));
     const responses = await Promise.all(promises);
-    console.log(
-      "🚀 ~ historyWeatherforLatestThreeYears ~ responses:",
-      responses
-    );
-    console.log(
-      "🚀 ~ historyWeatherforLatestThreeYears ~ responses:",
-      responses[0].data.data
-    );
+
     const data = responses.map((resp) => resp.data.data);
     return handleSuccessResponse(res, 200, data);
   } catch (error) {
@@ -148,7 +141,6 @@ const getPlaceImage = async (req, res) => {
       const response2 = await axios.get(
         `${PIXABAY_BASEURL}key=${PIXABAY_APIKEY}&q=${city}&image_type=photo&pretty=true&orientation=horizontal&category=nature`
       );
-      console.log("🚀 ~ getPlaceImage ~ response2:", response2);
       if (response2.data && response2.data.hits.length > 0) {
         return handleSuccessResponse(res, 200, response2.hits[0]);
       } else {
@@ -177,5 +169,4 @@ app.post(
 
 app.listen(8080, () => {
   console.log("app running on port 8080!");
-
 });

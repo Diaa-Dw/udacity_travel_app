@@ -1,6 +1,7 @@
 # Travel Planner Application
 
 ## Table of Contents
+
 - [Overview](#overview)
 - [Features](#features)
 - [Setup and Installation](#setup-and-installation)
@@ -10,11 +11,13 @@
 ---
 
 ## Overview
-The Travel Planner application helps users plan trips by providing essential information about their destination, including geographic details, weather forecasts, weather on the same trip day for the latest 3 years and images. It integrates multiple APIs to fetch data dynamically based on user input, ensuring a seamless and interactive experience.1
+
+The Travel Planner application helps users plan trips by providing essential information about their destination, including geographic details, weather forecasts, weather on the same trip day for the latest 3 years, and images. It integrates multiple APIs to fetch data dynamically based on user input, ensuring a seamless and interactive experience.
 
 ---
 
 ## Features
+
 1. **Destination Details**: Get latitude, longitude, country, and city details using the Geonames API.
 2. **Weather Forecasts**: Fetch current and future weather information using the Weatherbit API.
 3. **Destination Images**: Retrieve relevant images for the destination using the Pixabay API.
@@ -22,16 +25,18 @@ The Travel Planner application helps users plan trips by providing essential inf
 5. **Responsive Design**: Cross-browser compatible input for date selection.
 6. **Dynamic Updates**: Integrated with Webpack for hot-reloading during development.
 
-
 ---
 
 ## Setup and Installation
+
 ### Prerequisites
-- Node.js and npm installed
+
+- Node.js (v20.18.0)
 - Webpack knowledge
 - API keys for Geonames, Weatherbit, and Pixabay
 
 ### Steps
+
 1. **Clone the Repository**:
    ```bash
    git clone https://github.com/Diaa-Dw/udacity_travel_app.git
@@ -43,8 +48,9 @@ The Travel Planner application helps users plan trips by providing essential inf
    ```
 3. **Set Up Environment Variables**:
    Create a `.env` file in the root directory and add:
+
    ```env
-   GEONAMES_BASEURL = "http://api.geonames.org/searchJSON?"
+   GEONAMES_BASEURL="http://api.geonames.org/searchJSON?"
    WEATHERBIT_BASEURL="https://api.weatherbit.io/v2.0/"
    PIXABAY_BASEURL="https://pixabay.com/api/?"
 
@@ -52,23 +58,34 @@ The Travel Planner application helps users plan trips by providing essential inf
    WEATHERBIT_APIKEY=<your-weatherbit-api-key>
    PIXABAY_APIKEY=<your-pixabay-api-key>
    ```
-4. **Run Development Server**:
-   ```bash
-   npm run build-dev
-   ```
-5. **Build for Production**:
-   ```bash
-   npm run build-prod
-   ```
-6. **Start Express Server**:
-   ```bash
-   npm start
-   ```
 
+4. **Run in Production Mode**:
+
+   1. Build the application:
+      ```bash
+      npm run build-prod
+      ```
+   2. Start the server:
+      ```bash
+      npm start
+      ```
+      The website will run on `http://localhost:8080`.
+
+5. **Run in Development Mode**:
+   1. Build the application:
+      ```bash
+      npm run build-dev
+      ```
+   2. Start the server in a separate terminal:
+      ```bash
+      npm start
+      ```
+      The website will run on `http://localhost:3000`.
 
 ---
 
 ## APIs Used
+
 1. **Geonames API**: Fetches geographic details.
 2. **Weatherbit API**: Provides weather forecasts.
 3. **Pixabay API**: Supplies images based on location.
@@ -76,7 +93,7 @@ The Travel Planner application helps users plan trips by providing essential inf
 ---
 
 ## How to Use
+
 1. Enter the destination city in the input field.
 2. Select the trip date.
 3. View the countdown to your trip, destination details, weather forecast, and images.
-
