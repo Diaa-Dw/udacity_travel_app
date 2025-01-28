@@ -6,9 +6,11 @@ import handlePlaceImage from "./handlePalceImage";
 import handleWeatherData from "./handleWeatherApi";
 import isValidDate from "./isValidDate";
 import updateUI from "./updateUI";
-const generateBtn = document.getElementById("generate");
-const cityInput = document.getElementById("city");
-const dateInputEl = document.getElementById("dateInput");
+
+//DOM Elements
+const generateBtn = document.getElementById("generateBtn");
+const cityInput = document.getElementById("cityInput");
+const dateInputEl = document.getElementById("departureDate");
 const tripsContainer = document.querySelector(".trips-container");
 
 //Check if there is trips in localStorage and get them.
@@ -21,6 +23,12 @@ if (tripsData.length !== 0) {
 const toggleButtonDisable = (value) => {
   generateBtn.classList.toggle("btn-disabled");
   generateBtn.disabled = value;
+};
+
+const resetInputs = () => {
+  const currentDate = new Date().toISOString().split("T")[0];
+  cityInput.value = "";
+  dateInputEl.value = currentDate;
 };
 
 generateBtn.addEventListener("click", async (e) => {
@@ -52,8 +60,8 @@ generateBtn.addEventListener("click", async (e) => {
     );
     trip.id = tripsData.length;
     updateUI(trip);
+    resetInputs();
     tripsData.push(trip);
-    // toggleButtonDisable(true);
   } catch (error) {
     notify("error", error.message);
   } finally {
@@ -66,6 +74,12 @@ tripsContainer.addEventListener("click", (event) => {
   if (event.target.classList.contains("btn-delete")) {
     const container = event.target.parentElement;
     if (container) {
+      const index = container.dataset.id;
+      if (tripsData.length === 1) {
+        tripsData.pop();
+      } else {
+        tripsData.splice(index, 1);
+      }
       container.remove();
     }
   }

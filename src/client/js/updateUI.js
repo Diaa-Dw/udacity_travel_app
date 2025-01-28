@@ -78,7 +78,6 @@ const weatherHistoryTemplateForLatestThree = (weatherData) => {
 
 const tripsContainer = document.querySelector(".trips-container");
 const updateUI = (trip) => {
-  console.log("🚀 ~ updateUI ~ trip:", trip);
   const htmlTrip = tripTemplate(trip);
   tripsContainer.insertAdjacentHTML("afterbegin", htmlTrip);
 };

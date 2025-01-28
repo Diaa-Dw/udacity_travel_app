@@ -20,6 +20,5 @@ export const getCountryInfo = async (city) => {
       error.message || "Somthing went wrong while fetching destanation data.";
 
     notify("error", message);
-    console.log("🚀 ~ getCountryInfo ~ error:", error);
   }
 };

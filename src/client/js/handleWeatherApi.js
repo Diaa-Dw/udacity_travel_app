@@ -5,7 +5,6 @@ const handleWeatherData = async (
   destinationData,
   travelDate
 ) => {
-  console.log("🚀 ~ reaminingDays:", reaminingDays);
   try {
     if (reaminingDays < 0) {
       throw new Error("Entered Date is invalid!");
@@ -17,13 +16,7 @@ const handleWeatherData = async (
       // https://api.weatherbit.io/v2.0/forecast/daily?lat=41.015137&lon=28.979530&units=M&days=90&key=1ab71fff6f784451b7c66034c65d87d9
 
       const baseUrl = `https://api.weatherbit.io/v2.0/forecast/daily?`;
-      console.log(
-        "🚀 ~      baseUrl,reaminingDays,lat,long,:",
-        baseUrl,
-        reaminingDays,
-        lat,
-        long
-      );
+
       const response = await axios.post(
         "http://localhost:8080/forecastWeatherByDay",
         {
@@ -33,7 +26,6 @@ const handleWeatherData = async (
           long,
         }
       );
-      console.log("🚀 ~ response:", response);
 
       res.push(response.data.data);
     }
@@ -56,14 +48,12 @@ const handleWeatherData = async (
         travelDate,
       }
     );
-    console.log("🚀 ~ response:", response);
     res = [...res, ...response.data.data];
     return res;
   } catch (error) {
     const message =
       error.message || "Somthing went wrong while fetching place image.";
     notify("error", message);
-    console.log("🚀 ~ error:", error);
   }
 };
 

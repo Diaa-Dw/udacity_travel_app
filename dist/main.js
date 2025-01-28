@@ -31,9 +31,11 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 
 
 
-var generateBtn = document.getElementById("generate");
-var cityInput = document.getElementById("city");
-var dateInputEl = document.getElementById("dateInput");
+
+//DOM Elements
+var generateBtn = document.getElementById("generateBtn");
+var cityInput = document.getElementById("cityInput");
+var dateInputEl = document.getElementById("departureDate");
 var tripsContainer = document.querySelector(".trips-container");
 
 //Check if there is trips in localStorage and get them.
@@ -47,6 +49,11 @@ if (tripsData.length !== 0) {
 var toggleButtonDisable = function toggleButtonDisable(value) {
   generateBtn.classList.toggle("btn-disabled");
   generateBtn.disabled = value;
+};
+var resetInputs = function resetInputs() {
+  var currentDate = new Date().toISOString().split("T")[0];
+  cityInput.value = "";
+  dateInputEl.value = currentDate;
 };
 generateBtn.addEventListener("click", /*#__PURE__*/function () {
   var _ref = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee(e) {
@@ -74,7 +81,7 @@ generateBtn.addEventListener("click", /*#__PURE__*/function () {
           _context.prev = 9;
           toggleButtonDisable(true);
           trip.remainingDays = (0,_daysCounter__WEBPACK_IMPORTED_MODULE_2__["default"])(userInutDate);
-          if (!(trip.remainingDays <= 0)) {
+          if (!(trip.remainingDays < 0)) {
             _context.next = 14;
             break;
           }
@@ -94,23 +101,23 @@ generateBtn.addEventListener("click", /*#__PURE__*/function () {
           trip.weatherData = _context.sent;
           trip.id = tripsData.length;
           (0,_updateUI__WEBPACK_IMPORTED_MODULE_7__["default"])(trip);
+          resetInputs();
           tripsData.push(trip);
-          // toggleButtonDisable(true);
-          _context.next = 31;
+          _context.next = 32;
           break;
-        case 28:
-          _context.prev = 28;
+        case 29:
+          _context.prev = 29;
           _context.t0 = _context["catch"](9);
           (0,_notifyHandler__WEBPACK_IMPORTED_MODULE_3__["default"])("error", _context.t0.message);
-        case 31:
-          _context.prev = 31;
+        case 32:
+          _context.prev = 32;
           toggleButtonDisable(false);
-          return _context.finish(31);
-        case 34:
+          return _context.finish(32);
+        case 35:
         case "end":
           return _context.stop();
       }
-    }, _callee, null, [[9, 28, 31, 34]]);
+    }, _callee, null, [[9, 29, 32, 35]]);
   }));
   return function (_x) {
     return _ref.apply(this, arguments);
@@ -122,6 +129,12 @@ tripsContainer.addEventListener("click", function (event) {
   if (event.target.classList.contains("btn-delete")) {
     var container = event.target.parentElement;
     if (container) {
+      var index = container.dataset.id;
+      if (tripsData.length === 1) {
+        tripsData.pop();
+      } else {
+        tripsData.splice(index, 1);
+      }
       container.remove();
     }
   }
@@ -180,8 +193,7 @@ var getCountryInfo = /*#__PURE__*/function () {
           _context.t0 = _context["catch"](0);
           message = _context.t0.message || "Somthing went wrong while fetching destanation data.";
           (0,_notifyHandler__WEBPACK_IMPORTED_MODULE_0__["default"])("error", message);
-          console.log("🚀 ~ getCountryInfo ~ error:", _context.t0);
-        case 15:
+        case 14:
         case "end":
           return _context.stop();
       }
@@ -201,10 +213,8 @@ var getCountryInfo = /*#__PURE__*/function () {
 /***/ (() => {
 
 var today = new Date();
-var tomorrow = new Date();
-tomorrow.setDate(today.getDate() + 1);
-var formattedDate = tomorrow.toISOString().split("T")[0];
-var dateEl = document.getElementById("dateInput");
+var formattedDate = today.toISOString().split("T")[0];
+var dateEl = document.getElementById("departureDate");
 dateEl.value = formattedDate;
 dateEl.setAttribute("min", formattedDate);
 
@@ -260,30 +270,26 @@ var handlePlaceImage = /*#__PURE__*/function () {
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
-          console.log("🚀 ~ handlePlaceImage ~ destantionData:", destantionData);
           city = destantionData.city, country = destantionData.country;
-          console.log("🚀 ~ handlePlaceImage ~ country:", country);
-          console.log("🚀 ~ handlePlaceImage ~ city:", city);
-          _context.prev = 4;
-          _context.next = 7;
+          _context.prev = 1;
+          _context.next = 4;
           return axios.post("http://localhost:8080/getPlaceImage", {
             city: city,
             country: country
           });
-        case 7:
+        case 4:
           response = _context.sent;
           return _context.abrupt("return", response.data.data.largeImageURL);
-        case 11:
-          _context.prev = 11;
-          _context.t0 = _context["catch"](4);
+        case 8:
+          _context.prev = 8;
+          _context.t0 = _context["catch"](1);
           message = _context.t0.message || "Somthing went wrong while fetching place image.";
           (0,_notifyHandler__WEBPACK_IMPORTED_MODULE_0__["default"])("error", message);
-          console.log("🚀 ~ handlePlaceImage ~ error:", _context.t0);
-        case 16:
+        case 12:
         case "end":
           return _context.stop();
       }
-    }, _callee, null, [[4, 11]]);
+    }, _callee, null, [[1, 8]]);
   }));
   return function handlePlaceImage(_x) {
     return _ref.apply(this, arguments);
@@ -322,36 +328,33 @@ var handleWeatherData = /*#__PURE__*/function () {
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
-          console.log("🚀 ~ reaminingDays:", reaminingDays);
-          _context.prev = 1;
-          if (!(reaminingDays <= 0)) {
-            _context.next = 4;
+          _context.prev = 0;
+          if (!(reaminingDays < 0)) {
+            _context.next = 3;
             break;
           }
-          return _context.abrupt("return");
-        case 4:
+          throw new Error("Entered Date is invalid!");
+        case 3:
           res = [];
           lat = destinationData.lat;
           _long = destinationData["long"];
-          if (!(reaminingDays <= 16)) {
-            _context.next = 15;
+          if (!(reaminingDays > 0 && reaminingDays <= 16)) {
+            _context.next = 12;
             break;
           }
           // https://api.weatherbit.io/v2.0/forecast/daily?lat=41.015137&lon=28.979530&units=M&days=90&key=1ab71fff6f784451b7c66034c65d87d9
           _baseUrl = "https://api.weatherbit.io/v2.0/forecast/daily?";
-          console.log("🚀 ~      baseUrl,reaminingDays,lat,long,:", _baseUrl, reaminingDays, lat, _long);
-          _context.next = 12;
+          _context.next = 10;
           return axios__WEBPACK_IMPORTED_MODULE_0__["default"].post("http://localhost:8080/forecastWeatherByDay", {
             baseUrl: _baseUrl,
             reaminingDays: reaminingDays,
             lat: lat,
             "long": _long
           });
-        case 12:
+        case 10:
           _response = _context.sent;
-          console.log("🚀 ~ response:", _response);
           res.push(_response.data.data);
-        case 15:
+        case 12:
           if (reaminingDays > 356) {
             date = new Date();
             TDate = new Date(travelDate);
@@ -360,29 +363,27 @@ var handleWeatherData = /*#__PURE__*/function () {
             travelDate = "".concat(date.getFullYear(), "-").concat(month, "-").concat(day);
           }
           baseUrl = "https://api.weatherbit.io/v2.0/history/daily?";
-          _context.next = 19;
+          _context.next = 16;
           return axios__WEBPACK_IMPORTED_MODULE_0__["default"].post("http://localhost:8080/historyWeatherforLatestThreeYears", {
             baseUrl: baseUrl,
             lat: lat,
             "long": _long,
             travelDate: travelDate
           });
-        case 19:
+        case 16:
           response = _context.sent;
-          console.log("🚀 ~ response:", response);
           res = [].concat(_toConsumableArray(res), _toConsumableArray(response.data.data));
           return _context.abrupt("return", res);
-        case 25:
-          _context.prev = 25;
-          _context.t0 = _context["catch"](1);
+        case 21:
+          _context.prev = 21;
+          _context.t0 = _context["catch"](0);
           message = _context.t0.message || "Somthing went wrong while fetching place image.";
           notify("error", message);
-          console.log("🚀 ~ error:", _context.t0);
-        case 30:
+        case 25:
         case "end":
           return _context.stop();
       }
-    }, _callee, null, [[1, 25]]);
+    }, _callee, null, [[0, 21]]);
   }));
   return function handleWeatherData(_x, _x2, _x3) {
     return _ref.apply(this, arguments);
@@ -404,11 +405,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 var isValidDate = function isValidDate(userDate) {
-  console.log("🚀 ~ isValidDate ~ userDate:", userDate);
   var currentDate = new Date().toISOString().split("T")[0];
-  console.log("🚀 ~ isValidDate ~ currentDate:", currentDate);
   var compareDates = new Date(userDate) - new Date(currentDate);
-  console.log("🚀 ~ isValidDate ~ compareDates:", compareDates);
   if (compareDates < 0) {
     return false;
   } else {
@@ -506,7 +504,6 @@ var weatherHistoryTemplateForLatestThree = function weatherHistoryTemplateForLat
 };
 var tripsContainer = document.querySelector(".trips-container");
 var updateUI = function updateUI(trip) {
-  console.log("🚀 ~ updateUI ~ trip:", trip);
   var htmlTrip = tripTemplate(trip);
   tripsContainer.insertAdjacentHTML("afterbegin", htmlTrip);
 };
@@ -609,7 +606,10 @@ body {
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   line-height: 1.6;
-  min-height: 100vh;
+}
+
+.app {
+  min-height: calc(100vh - 7rem);
 }
 
 .wrapper {
@@ -625,7 +625,7 @@ body {
 .wrapper-blue {
   background-color: #d0e5f7;
 }
-`, "",{"version":3,"sources":["webpack://./src/client/css/base/_base.scss"],"names":[],"mappings":"AAAA;;EAEE,UAAU;EACV,SAAS;EACT,sBAAsB;AACxB;AACA;EACE,gBAAgB;AAClB;;AAEA;EACE,iBAAiB;EACjB;sDACoD;EACpD,gBAAgB;EAChB,iBAAiB;AACnB;;AAEA;EACE,WAAW;EACX,aAAa;EACb,uBAAuB;EACvB,mBAAmB;AACrB;AACA;EACE,yBAAyB;AAC3B;;AAEA;EACE,yBAAyB;AAC3B","sourcesContent":["*,\r\nhtml {\r\n  padding: 0;\r\n  margin: 0;\r\n  box-sizing: border-box;\r\n}\r\nhtml {\r\n  font-size: 62.5%;\r\n}\r\n\r\nbody {\r\n  font-size: 1.6rem;\r\n  font-family: \"Lucida Sans\", \"Lucida Sans Regular\", \"Lucida Grande\",\r\n    \"Lucida Sans Unicode\", Geneva, Verdana, sans-serif;\r\n  line-height: 1.6;\r\n  min-height: 100vh;\r\n}\r\n\r\n.wrapper {\r\n  width: 100%;\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n}\r\n.wrapper-yellow {\r\n  background-color: #f4f5cd;\r\n}\r\n\r\n.wrapper-blue {\r\n  background-color: #d0e5f7;\r\n}\r\n"],"sourceRoot":""}]);
+`, "",{"version":3,"sources":["webpack://./src/client/css/base/_base.scss"],"names":[],"mappings":"AAAA;;EAEE,UAAU;EACV,SAAS;EACT,sBAAsB;AACxB;AACA;EACE,gBAAgB;AAClB;;AAEA;EACE,iBAAiB;EACjB;sDACoD;EACpD,gBAAgB;AAClB;;AAEA;EACE,8BAA8B;AAChC;;AAEA;EACE,WAAW;EACX,aAAa;EACb,uBAAuB;EACvB,mBAAmB;AACrB;AACA;EACE,yBAAyB;AAC3B;;AAEA;EACE,yBAAyB;AAC3B","sourcesContent":["*,\r\nhtml {\r\n  padding: 0;\r\n  margin: 0;\r\n  box-sizing: border-box;\r\n}\r\nhtml {\r\n  font-size: 62.5%;\r\n}\r\n\r\nbody {\r\n  font-size: 1.6rem;\r\n  font-family: \"Lucida Sans\", \"Lucida Sans Regular\", \"Lucida Grande\",\r\n    \"Lucida Sans Unicode\", Geneva, Verdana, sans-serif;\r\n  line-height: 1.6;\r\n}\r\n\r\n.app {\r\n  min-height: calc(100vh - 7rem);\r\n}\r\n\r\n.wrapper {\r\n  width: 100%;\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n}\r\n.wrapper-yellow {\r\n  background-color: #f4f5cd;\r\n}\r\n\r\n.wrapper-blue {\r\n  background-color: #d0e5f7;\r\n}\r\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

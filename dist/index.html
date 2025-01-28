@@ -1,67 +1,84 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
       rel="stylesheet"
       type="text/css"
       href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
     />
-
     <title>Weather Journal</title>
   <script defer src="/main.js"></script></head>
   <body>
     <div class="app">
-      <div class="wrapper wrapper-blue">
-        <header class="header">
-          <img
-            class="header__logo"
-            src="/assets/images/logo24563d0d828ed04a5f5c.png"
-            alt="travel_planer_logo"
-          />
-        </header>
-      </div>
-      <div class="wrapper wrapper-yellow">
-        <form class="trip-form">
-          <div class="input-container">
-            <label for="city"> Trip To:</label>
+      <!-- Header Section -->
+       <div class="wrapper wrapper-blue">
+         <header class="header">
+           <img
+           class="header__logo"
+           src="/assets/images/logo24563d0d828ed04a5f5c.png"
+           alt="Travel Planner Logo"
+           />
+          </header>
+        </div>
+
+      <!-- Trip Form Section -->
+      <section class="form-section wrapper wrapper-yellow">
+        <form class="trip-form" id="trip-form">
+          <div class="input-group">
+            <label for="cityInput" class="input-label">Trip To:</label>
             <input
               class="input"
               type="text"
-              id="city"
-              placeholder="enter city here"
+              id="cityInput"
+              placeholder="Enter city here"
+              required
             />
           </div>
-          <div class="input-container">
-            <label for="dateInput"> Departure Date:</label>
-
-            <input class="input" type="date" id="dateInput" />
+          <div class="input-group">
+            <label for="departureDate" class="input-label">Departure Date:</label>
+            <input
+              class="input"
+              type="date"
+              id="departureDate"
+              required
+            />
           </div>
-          <button class="btn btn-primary" id="generate" type="submit">
+          <button class="btn btn-primary" id="generateBtn" type="submit">
             Generate
           </button>
         </form>
-      </div>
+      </section>
 
-      <div class="wrapper">
-        <div class="trips-container"></div>
-      </div>
+      <!-- Trips Section -->
+      <section class="trips-section wrapper">
+        <div class="trips-container" id="trips-container"></div>
+      </section>
     </div>
 
+    <!-- Footer Section -->
     <footer class="footer wrapper wrapper-blue">
-      <p class="footer__paragraph">
+      <p class="footer__text">
         Made with ❤️ by
-        <a href="https://diaa-dw.netlify.app/" target="_blank">Diaa Dwikat</a>
+        <a
+          href="https://diaa-dw.netlify.app/"
+          target="_blank"
+          class="footer__link"
+        >
+          Diaa Dwikat
+        </a>
       </p>
     </footer>
+
+    <!-- <script>
+      // Check that service workers are supported
+      if ("serviceWorker" in navigator) {
+        // Use the window load event to keep the page load performant
+        window.addEventListener("load", () => {
+          navigator.serviceWorker.register("/service-worker.js");
+        });
+      }
+    </script> -->
   </body>
-  <!-- <script>
-    // Check that service workers are supported
-    if ("serviceWorker" in navigator) {
-      // Use the window load event to keep the page load performant
-      window.addEventListener("load", () => {
-        navigator.serviceWorker.register("/service-worker.js");
-      });
-    }
-  </script> -->
-</html>
+</

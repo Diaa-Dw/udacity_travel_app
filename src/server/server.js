@@ -95,10 +95,6 @@ const forcestWeatherByDay = async (req, res) => {
 const historyWeatherforLatestThreeYears = async (req, res) => {
   const { baseUrl, lat, long, travelDate } = req.body;
   const latestThreeYears = getLatestThreeYearsDate(travelDate);
-  console.log(
-    "🚀 ~ historyWeatherforLatestThreeYears ~ latestThreeYears:",
-    latestThreeYears
-  );
 
   const urls = latestThreeYears.map(
     ({ startDate, endDate }) =>

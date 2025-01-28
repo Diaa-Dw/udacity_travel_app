@@ -80,7 +80,7 @@ The Travel Planner application helps users plan trips by providing essential inf
       ```bash
       npm start
       ```
-      The website will run on `http://localhost:3000`.
+      The website will run on `http://localhost:3001`.
 
 ---
 
