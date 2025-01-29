@@ -172,12 +172,13 @@ var getCountryInfo = /*#__PURE__*/function () {
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
-          _context.prev = 0;
-          _context.next = 3;
+          console.log("🚀 ~ getCountryInfo ~ city:", city);
+          _context.prev = 1;
+          _context.next = 4;
           return axios__WEBPACK_IMPORTED_MODULE_1__["default"].post("http://localhost:8080/countryInfo", {
             city: city
           });
-        case 3:
+        case 4:
           res = _context.sent;
           data = res.data.data;
           geonames = data.geonames;
@@ -188,16 +189,16 @@ var getCountryInfo = /*#__PURE__*/function () {
             country: geonames[0].countryName
           };
           return _context.abrupt("return", destinationData);
-        case 10:
-          _context.prev = 10;
-          _context.t0 = _context["catch"](0);
+        case 11:
+          _context.prev = 11;
+          _context.t0 = _context["catch"](1);
           message = _context.t0.message || "Somthing went wrong while fetching destanation data.";
           (0,_notifyHandler__WEBPACK_IMPORTED_MODULE_0__["default"])("error", message);
-        case 14:
+        case 15:
         case "end":
           return _context.stop();
       }
-    }, _callee, null, [[0, 10]]);
+    }, _callee, null, [[1, 11]]);
   }));
   return function getCountryInfo(_x) {
     return _ref.apply(this, arguments);

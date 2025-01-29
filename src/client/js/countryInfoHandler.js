@@ -2,6 +2,7 @@ import axios from "axios";
 import notify from "./notifyHandler";
 
 export const getCountryInfo = async (city) => {
+  console.log("🚀 ~ getCountryInfo ~ city:", city);
   try {
     const res = await axios.post("http://localhost:8080/countryInfo", {
       city,
